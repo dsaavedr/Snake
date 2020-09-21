@@ -8,8 +8,14 @@ html, body {
 #app {
     width: 100vw;
     min-height: 100vh;
-    background: white;
+    background: #222;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#canvas {
+    border: 1px solid white;
+    border-radius: 5px;
+    box-shadow: 0 0 15px #ccc;
 }
