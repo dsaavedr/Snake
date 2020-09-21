@@ -78,18 +78,22 @@ function init() {
     document.addEventListener('keydown', (e) => {
         switch (e.key) {
             case "ArrowRight":
+            case "d":
                 x = gridSize;
                 y = 0;
                 break;
             case "ArrowDown":
+            case "s":
                 x = 0;
                 y = gridSize;
                 break;
             case "ArrowLeft":
+            case "a":
                 x = -gridSize;
                 y = 0;
                 break;
             case "ArrowUp":
+            case "w":
                 x = 0;
                 y = -gridSize;
                 break;
