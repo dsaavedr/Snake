@@ -1,11 +1,14 @@
 var size = 600, //squared
-    gridSize = 25,
-    speed = 4,
+    gridSize = 40,
     c = 0,
+    initialSpeed = 4,
+    increase = 0.2,
+    speed,
     d,
     food,
     snake,
     n,
+    mouse,
     WIDTH, HEIGHT;
 
 var canvas = document.getElementById('canvas'),
@@ -20,6 +23,8 @@ function init() {
     WIDTH = window.innerWidth;
     HEIGHT = window.innerHeight;
 
+    size = Math.floor(size / gridSize) * gridSize;
+
     if (WIDTH >= size) {
         WIDTH = size;
         HEIGHT = WIDTH;
@@ -33,6 +38,11 @@ function init() {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     ctx.closePath();
+
+    mouse = new Image();
+    mouse.src = "mouse.png";
+
+    speed = initialSpeed;
 
     n = size / gridSize;
 
@@ -115,10 +125,10 @@ function ani() {
         ctx.fillStyle = "white";
         ctx.fillText("You lost!", WIDTH / 2 - 40, 100);
         ctx.font = "20px sans-serif";
-        ctx.fillText("Click to restart", WIDTH / 2 - 48, 300);
+        ctx.fillText("Press any key to restart...", WIDTH / 2 - 90, 300);
         ctx.restore();
 
-        window.addEventListener('mousedown', handleClick, true);
+        window.addEventListener('keydown', handleClick, true);
     }
 
     c++;
@@ -128,17 +138,26 @@ function ani() {
 init();
 
 function drawFood() {
-    rect(food.x, food.y, gridSize, gridSize, false, true, "#f66");
+    // rect(food.x, food.y, gridSize, gridSize, false, true, "#f66");
+    let ar = 18 / 27;
+    let w = gridSize + 2
+    ctx.drawImage(mouse, 0, 0, 27, 18, food.x, food.y + 5, w, w * ar);
 }
 
 function newFood() {
-    // TODO: check snake segments
     let f = new Vector(
         Math.floor(random(n)) * gridSize,
         Math.floor(random(n)) * gridSize
     );
 
-    speed += 0.1;
+    for (i = 0; i < snake.segments.length; i++) {
+        let seg = snake.segments[i];
+        if (seg.x == f.x && seg.y == f.y) {
+            return newFood();
+        }
+    }
+
+    speed += increase;
 
     return f;
 }
@@ -162,5 +181,7 @@ function handleClick() {
     snake = new Snake(ix, iy, gridSize, d);
     snake.nextDir = d.copy();
 
-    window.removeEventListener("mousedown", handleClick, true);
+    speed = initialSpeed;
+
+    window.removeEventListener("keydown", handleClick, true);
 }
