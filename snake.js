@@ -53,7 +53,7 @@ class Snake {
             }
         }
 
-        if (head.x > WIDTH || head.x < 0 || head.y > HEIGHT || head.y < 0) {
+        if (head.x >= WIDTH || head.x < 0 || head.y >= HEIGHT || head.y < 0) {
             this.dead = true;
         }
     }
