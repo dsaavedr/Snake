@@ -48,6 +48,7 @@ function init() {
 
     ctx.strokeStyle = 'white';
     ctx.font = "30px sans-serif";
+    ctx.imageSmoothingEnabled = false;
 
     var ix = Math.floor(n / 2) * gridSize;
     var iy = Math.floor(n / 2) * gridSize;
